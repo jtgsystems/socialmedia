@@ -431,7 +431,27 @@ git push origin gh-pages
 
 ---
 
-*Last Updated: 2025-10-26*
+## Dependencies
+
+This project has **no package manager dependencies** (no package.json or requirements.txt needed).
+
+### External Dependencies
+- **Browser**: Google Chrome (must be in system PATH)
+- **Operating System**: Windows (for .bat script execution)
+- **Internet**: Active connection required for social media sites
+
+### Web Dependencies (CDN)
+- Google Fonts: Open Sans (400, 700 weights)
+- External stylesheets loaded via CDN in index.html
+
+### No Build Process
+- Static HTML/CSS site (no bundler, no compilation)
+- Batch script runs directly (no preprocessing)
+- GitHub Pages serves files as-is
+
+---
+
+*Last Updated: 2025-12-26*
 *Repository: jtgsystems/socialmedia*
 *Branch: gh-pages*
 *Claude Code Project Documentation*
