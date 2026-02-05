@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Scanner - Cinematic Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #0a0a0a;
+            --surface-elevated: #1a1a1a;
+            --accent: #ffffff;
+            --critical: #ff3c3c;
+            --high: #ff8c3c;
+            --medium: #ffcc3c;
+            --low: #3c8cff;
+            --info: #8c8c8c;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--accent);
+            font-family: 'Manrope', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        
+        /* Header & Dashboard */
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 60px; padding: 20px;
+            background: var(--glass); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 20px;
+        }
+        .project-info h1 { margin: 0; font-weight: 800; letter-spacing: -1px; font-size: 2rem; }
+        .stats { display: flex; gap: 40px; }
+        .stat-item { text-align: center; }
+        .stat-value { display: block; font-size: 2.5rem; font-weight: 800; line-height: 1; }
+        .stat-label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; opacity: 0.5; margin-top: 5px; }
+
+        /* Grade Badge */
+        .grade-badge {
+            font-size: 3rem; font-weight: 800; padding: 10px 30px; border-radius: 15px;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%); color: #000;
+            box-shadow: 0 0 40px rgba(255,255,255,0.1);
+        }
+        .grade-A { background: linear-gradient(135deg, #00ff88 0%, #00bcff 100%); }
+        .grade-f { background: linear-gradient(135deg, #ff3c3c 0%, #991b1b 100%); color: #fff; }
+
+        /* Issues List */
+        .issue-section { margin-bottom: 80px; }
+        .section-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: var(--glass-border); }
+        
+        .issue-card {
+            background: var(--surface); border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 20px; margin-bottom: 15px;
+            transition: transform 0.2s, border-color 0.2s;
+            display: grid; grid-template-columns: 80px 1fr 200px; gap: 20px; align-items: start;
+        }
+        .issue-card:hover { transform: translateX(5px); border-color: rgba(255,255,255,0.3); }
+        
+        .severity { 
+            font-size: 0.7rem; font-weight: 800; text-transform: uppercase; 
+            padding: 4px 8px; border-radius: 4px; text-align: center;
+        }
+        .sev-critical { background: var(--critical); color: #fff; }
+        .sev-high { background: var(--high); color: #000; }
+        .sev-medium { background: var(--medium); color: #000; }
+        .sev-low { background: var(--low); color: #fff; }
+        .sev-info { background: var(--info); color: #fff; }
+
+        .issue-content h3 { margin: 0 0 10px 0; font-size: 1.1rem; font-weight: 600; }
+        .issue-content .meta { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; opacity: 0.6; margin-bottom: 10px; }
+        .issue-content .desc { font-size: 0.95rem; opacity: 0.8; }
+        
+        .visual-evidence { margin-top: 15px; border-radius: 8px; overflow: hidden; border: 1px solid var(--glass-border); }
+        .visual-evidence img { width: 100%; display: block; filter: brightness(0.8); transition: filter 0.3s; }
+        .visual-evidence img:hover { filter: brightness(1); }
+
+        .file-link { color: var(--low); text-decoration: none; border-bottom: 1px solid transparent; }
+        .file-link:hover { border-bottom-color: var(--low); }
+
+        footer { text-align: center; padding: 60px 0; opacity: 0.3; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="project-info">
+                <div class="stat-label">Project Quality Audit</div>
+                <h1>SOCIALMEDIA</h1>
+                <div class="stat-label" style="margin-top:10px;">Scanned on 2/3/2026, 9:27:28 PM</div>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-value">0</span>
+                    <span class="stat-label">Score</span>
+                </div>
+                <div class="stat-item">
+                    <div class="grade-badge grade-f">F</div>
+                    <span class="stat-label">Grade</span>
+                </div>
+            </div>
+        </header>
+
+        
+            <section class="issue-section">
+                <h2 class="section-title">HIGH ISSUES <span style="opacity:0.4; margin-left:10px;">(1)</span></h2>
+                <div class="issue-grid">
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-high">high</div>
+                            <div class="issue-content">
+                                <div class="meta">biome [lint/suspicious/noDuplicateFontNames]</div>
+                                <h3>Duplicate font names are redundant and unnecessary: monospace</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">stylesheets/normalize.css</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                </div>
+            </section>
+            
+            <section class="issue-section">
+                <h2 class="section-title">MEDIUM ISSUES <span style="opacity:0.4; margin-left:10px;">(34)</span></h2>
+                <div class="issue-grid">
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">insecure-endpoint</div>
+                                <h3>Issue detail unavailable</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/CLAUDE.md:48</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">insecure-endpoint</div>
+                                <h3>Issue detail unavailable</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/CLAUDE.md:49</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">insecure-endpoint</div>
+                                <h3>Issue detail unavailable</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/CLAUDE.md:50</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">insecure-endpoint</div>
+                                <h3>Issue detail unavailable</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/CLAUDE.md:315</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">risky-endpoint</div>
+                                <h3>Issue detail unavailable</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/CLAUDE.md:315</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">insecure-endpoint</div>
+                                <h3>Issue detail unavailable</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:8</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/normalize.css:303</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/normalize.css:322</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/normalize.css:369</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/normalize.css:384</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/normalize.css:417</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:32</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:41</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:46</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:58</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:66</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:70</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:108</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:117</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:120</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:127</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:147</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:151</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:168</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:177</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:186</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:189</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:191</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:193</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:198</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [a11y-small-touch-target]</div>
+                                <h3>Accessibility: Touch targets must be minimum 44x44px. Use min-h-[44px] min-w-[44px] or p-3</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:202</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-magic-blur]</div>
+                                <h3>Use CSS variables (e.g., --glass-blur, --glass-opacity) instead of hardcoded magic numbers for design tokens.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:93</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">unoptimized-image</div>
+                                <h3>4 image audit findings (Size, Format, SEO, Metadata)</h3>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-medium">medium</div>
+                            <div class="issue-content">
+                                <div class="meta">biome</div>
+                                <h3>1 findings</h3>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                </div>
+            </section>
+            
+            <section class="issue-section">
+                <h2 class="section-title">LOW ISSUES <span style="opacity:0.4; margin-left:10px;">(51)</span></h2>
+                <div class="issue-grid">
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:19</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:24</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:29</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:34</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:38</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:42</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:52</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:56</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:60</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:64</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:65</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:69</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:74</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:80</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:85</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:89</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:94</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:99</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:100</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/github-light.css:104</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/normalize.css:145</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/normalize.css:146</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/normalize.css:377</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [css-important-overuse]</div>
+                                <h3>Avoid !important. It breaks the CSS cascade and makes maintenance difficult.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/normalize.css:317</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [css_important]</div>
+                                <h3>!important breaks cascade and makes CSS hard to maintain.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/normalize.css:317</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:10</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:13</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:21</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:22</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:23</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:32</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:34</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:35</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:57</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:59</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:60</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:60</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:115</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:122</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:123</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:130</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:132</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:133</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [gs-design-hardcoded-color]</div>
+                                <h3>Extract hardcoded colors to CSS variables (e.g., --accent-color) to align with GS-DESIGN-001.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:139</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [css-fixed-font-size]</div>
+                                <h3>Use rem or em for font-size to respect user preferences and browser settings.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:8</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">heuristic [css_all_selector]</div>
+                                <h3>Universal selector (*) is slow. Target specific elements.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/stylesheets/stylesheet.css:1</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">unoptimized-image</div>
+                                <h3>Issue detail unavailable</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/banner.png</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">image-not-webp</div>
+                                <h3>Image is in 'png' format. Consider using WebP or AVIF for better performance.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/banner.png</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">image-privacy-metadata</div>
+                                <h3>Image contains hardware/software metadata signatures.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/banner.png</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">image-seo-missing-metadata</div>
+                                <h3>Image metadata is missing SEO keywords/subject tags.</h3>
+                                
+                                    <div class="meta">
+                                        <span class="file-link">/home/ultron/Desktop/repos/socialmedia/banner.png</span>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                        <div class="issue-card">
+                            <div class="severity sev-low">low</div>
+                            <div class="issue-content">
+                                <div class="meta">biome</div>
+                                <h3>stderr captured</h3>
+                                
+                                
+                            </div>
+                        </div>
+                    
+                </div>
+            </section>
+            
+
+        <footer>
+            GENERATED BY ULTIMATE SCANNER v2.0 - SOTA 2026 STANDARDS
+        </footer>
+    </div>
+</body>
+</html>
