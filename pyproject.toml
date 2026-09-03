@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "socialmedia-command-center"
+version = "2.0.0"
+description = "Cross-Platform Social Media Command Center, Multi-Platform Launcher & Brand Health Auditor"
+readme = "README.md"
+authors = [{ name = "JTG Systems", email = "jtgsystems@gmail.com" }]
+license = { text = "MIT" }
+keywords = [
+    "socialmedia", "social-media-automation", "brand-auditor",
+    "marketing-tools", "launcher", "jtgsystems", "seo"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3"
+]
+
+[project.urls]
+Homepage = "https://jtgsystems.com"
+Repository = "https://github.com/jtgsystems/socialmedia"
+
+[project.scripts]
+socialmedia = "socialmedia_suite.cli:main"
